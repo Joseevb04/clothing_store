@@ -22,7 +22,8 @@ public class Product {
     @Length(max = 50)
     private String name;
 
-    @NotBlank private String description;
+    @NotBlank
+    private String description;
 
     @NotNull
     @Min(0)

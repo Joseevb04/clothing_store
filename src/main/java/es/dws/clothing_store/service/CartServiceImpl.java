@@ -47,7 +47,7 @@ public class CartServiceImpl implements CartService {
             return product;
         }
 
-        return null;
+        throw new RuntimeException("Product already in Cart");
     }
 
     @Override
@@ -59,7 +59,13 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public int updateProductAmountByIs(int amount, int productId, int userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateProductAmountByIs'");
+        final Set<Cart> userCart = getCartsByUserId(userId);
+
+        userCart.stream().filter(cart -> cart.getProduct().getId() == productId).map(cart -> {
+            cart.setAmount(amount);
+            return cart;
+        });
+
+        return amount;
     }
 }

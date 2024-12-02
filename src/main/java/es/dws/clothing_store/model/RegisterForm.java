@@ -3,18 +3,17 @@ package es.dws.clothing_store.model;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-/** User */
+/**
+ * RegisterForm
+ */
 @Data
 @Builder
 @AllArgsConstructor
-public class User {
-
-    private Integer id;
+public class RegisterForm {
 
     @NotBlank
     private String firstName;
@@ -32,5 +31,4 @@ public class User {
     @NotBlank
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$.,\\-#])[A-Za-z\\d$.,\\-#]{8,12}$")
     private String password;
-
 }
