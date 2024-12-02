@@ -1,23 +1,22 @@
 package es.dws.clothing_store.service;
 
 import es.dws.clothing_store.model.Product;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /** ProductServiceImpl */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+
+    private final CSVService csvService;
 
     // private static int counter = 0;
 
@@ -26,18 +25,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Set<Product> getProducts() {
         if (products.isEmpty()) {
-            try {
-                ClassPathResource resource = new ClassPathResource("data.csv");
-                List<String> lines = Files.readAllLines(resource.getFile().toPath(), StandardCharsets.UTF_8);
-
-                products.addAll(lines.stream()
-                        .skip(1)
-                        .map(this::parseProductFromCsvLine)
-                        .collect(Collectors.toSet()));
-
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to load products from CSV", e);
-            }
+            List<Product> productList = csvService.readFromCsv("data.csv", this::parseProductFromCsvLine);
+            products.addAll(productList);
         }
 
         products.forEach(p -> log.info(p.toString()));
