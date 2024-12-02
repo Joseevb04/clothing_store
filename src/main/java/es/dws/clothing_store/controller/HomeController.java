@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import es.dws.clothing_store.model.Login;
 import es.dws.clothing_store.model.RegisterForm;
 import es.dws.clothing_store.model.User;
+import es.dws.clothing_store.service.ProductService;
 import es.dws.clothing_store.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,14 @@ import lombok.RequiredArgsConstructor;
 public class HomeController {
 
     private final UserService userService;
+    private final ProductService productService;
 
     private static Optional<User> loggedUser = Optional.empty();
 
     @GetMapping({ "/", "/home", "/index" })
     public String showHome(final Model model) {
+
+        model.addAttribute("products", productService.getProducts());
         return loggedUser.isPresent()
                 ? "indexView"
                 : "redirect:/login";

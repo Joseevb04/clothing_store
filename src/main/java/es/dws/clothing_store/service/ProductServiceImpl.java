@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     public Set<Product> getProducts() {
         if (products.isEmpty()) {
             try {
-                ClassPathResource resource = new ClassPathResource("clothing_products.csv");
+                ClassPathResource resource = new ClassPathResource("data.csv");
                 List<String> lines = Files.readAllLines(resource.getFile().toPath(), StandardCharsets.UTF_8);
 
                 products.addAll(lines.stream()
