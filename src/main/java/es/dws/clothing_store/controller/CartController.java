@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 /**
- * ProductController
+ * CartController
  */
 @Controller
 @RequestMapping("/cart")
@@ -25,15 +25,17 @@ public class CartController {
 
     @GetMapping
     public String showCart(final Model model) {
-
         return UserSessionUtils.getLoggedUser(session).map(u -> {
             model.addAttribute("products", cartService.getCartsByUserId(u.getId()));
             return "cartView";
         }).orElse("redirect:/login");
     }
 
-    @GetMapping("/add/{userId}/{productId}")
-    public String addProductToCart(@PathVariable final Integer userId, @PathVariable final Integer productId) {
-        return "";
+    @GetMapping("/add/{productId}")
+    public String addProductToCart(@PathVariable final Integer productId) {
+        return UserSessionUtils.getLoggedUser(session).map(u -> {
+            cartService.addProductToUserCartById(productId, u.getId());
+            return "redirect:/?success=1";
+        }).orElse("rediect:/login");
     }
 }
