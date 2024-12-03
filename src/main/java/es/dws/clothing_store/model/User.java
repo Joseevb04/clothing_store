@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-/** User */
+/**
+ * User
+ */
 @Data
 @Builder
 @AllArgsConstructor

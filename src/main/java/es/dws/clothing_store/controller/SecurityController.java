@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SecurityController {
 
     private final HttpSession session;
+
     private final UserService userService;
 
     /**

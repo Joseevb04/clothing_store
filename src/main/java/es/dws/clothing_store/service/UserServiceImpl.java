@@ -3,6 +3,7 @@ package es.dws.clothing_store.service;
 import org.springframework.stereotype.Service;
 
 import es.dws.clothing_store.entity.UserEntity;
+import es.dws.clothing_store.exception.InvalidCredentialsException;
 import es.dws.clothing_store.mapper.UserMapper;
 import es.dws.clothing_store.model.Login;
 import es.dws.clothing_store.model.RegisterForm;
@@ -11,7 +12,9 @@ import es.dws.clothing_store.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/** UserServiceImpl */
+/**
+ * UserServiceImpl
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -33,11 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loginUser(Login login) {
-        log.info(login.getUsername());
-        log.info(login.getPassword());
         return userRepository.findByUsernameAndPassword(login.getUsername(), login.getPassword())
                 .map(UserMapper::mapUser)
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid credentials"));
     }
 
     @Override
