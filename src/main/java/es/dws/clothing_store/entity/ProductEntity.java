@@ -36,17 +36,17 @@ public class ProductEntity {
     @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 
-    @NotBlank
-    @Length(max = 50)
+    @NotBlank(message = "Product name cannot be empty")
+    @Length(max = 50, message = "Product name cannot be longer than 50 characters")
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Product description cannot be empty")
     @Column(name = "description", nullable = false, length = 200)
     private String description;
 
-    @NotNull
-    @Min(0)
+    @NotNull(message = "Product price cannot be null")
+    @Min(value = 0, message = "Product price cannot be less than 0")
     @Column(name = "price", nullable = false)
     private Double price;
 

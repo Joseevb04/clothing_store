@@ -18,14 +18,14 @@ public class Product {
 
     private Integer id;
 
-    @NotBlank
-    @Length(max = 50)
+    @NotBlank(message = "Product name cannot be empty")
+    @Length(max = 50, message = "Product name cannot be longer than 50 characters")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Product description cannot be empty")
     private String description;
 
-    @NotNull
-    @Min(0)
+    @NotNull(message = "Product price cannot be null")
+    @Min(value = 0, message = "Product price cannot be less than 0")
     private Double price;
 }

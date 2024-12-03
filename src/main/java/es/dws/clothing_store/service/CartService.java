@@ -15,4 +15,6 @@ public interface CartService {
     boolean removeProductFromUserCartById(int productId, int userId);
 
     int updateProductAmountByIs(int amount, int productId, int userId);
+
+    double getUserCartTotal(int userId);
 }

@@ -8,14 +8,39 @@
 		<header th:replace="~{fragments :: header}"></header>
 
 		<main>
-			<section th:if="${!products.isEmpty()}">
-				<article th:each="product : ${products}">
-					<h2 th:text="${product.name}"></h2>
-					<a
-						th:href="@{/cart/add/{productId}(productId=${product.id})}"
-						>Add to cart</a
+			<section th:if="${!products.isEmpty()}" class="container mt-5">
+				<div class="row">
+					<article
+						th:each="product : ${products}"
+						class="col-md-4 mb-4"
 					>
-				</article>
+						<div class="card h-100 shadow-sm">
+							<div class="card-body position-relative">
+								<a
+									th:href="@{/cart/add/{productId}(productId=${product.id})}"
+									class="btn btn-primary position-absolute top-0 end-0 m-2"
+									style="z-index: 10"
+								>
+									<i class="bi bi-cart-plus"></i>
+								</a>
+								<h5
+									class="card-title"
+									th:text="${product.name}"
+								></h5>
+								<p class="card-text text-muted">
+									<strong>Price:</strong>
+									<span th:text="${product.price}"></span>
+								</p>
+								<p class="card-text">
+									<strong>Description:</strong>
+									<span
+										th:text="${product.description}"
+									></span>
+								</p>
+							</div>
+						</div>
+					</article>
+				</div>
 			</section>
 		</main>
 	</body>

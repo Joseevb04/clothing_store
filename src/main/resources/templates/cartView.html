@@ -6,13 +6,67 @@
 	</head>
 	<body>
 		<header th:replace="~{fragments :: header}"></header>
-		<main>
-			<section>
-				<article th:each="product : ${products}">
-					<h2 th:text="${product.product.name}"></h2>
-					<p>Cantidad: <span th:text="${product.amount}"></span></p>
-				</article>
-			</section>
+
+		<main class="container py-5">
+			<h1 class="mb-4">Your Cart</h1>
+
+			<div class="row">
+				<div class="col-md-8 d-flex flex-column">
+					<div th:each="product : ${products}" class="card mb-3">
+						<div class="card-body">
+							<h5
+								class="card-title"
+								th:text="${product.product.name}"
+							></h5>
+							<p class="card-text">
+								Price:
+								<span th:text="${product.product.price}"></span>
+								€
+							</p>
+							<p class="card-text">
+								Quantity:
+								<span th:text="${product.amount}"></span>
+							</p>
+							<p class="card-text">
+								Total:
+								<span
+									th:text="${product.product.price * product.amount}"
+								></span>
+								€
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4 position-sticky top-15 h-25">
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">Cart Summary</h4>
+							<hr />
+							<p class="card-text">
+								<strong>Total: </strong
+								><span th:text="${total}"></span> €
+							</p>
+							<div class="d-flex justify-content-between">
+								<a href="/home" class="btn btn-secondary"
+									>Continue Shopping</a
+								>
+								<a href="/checkout" class="btn btn-primary"
+									>Proceed to Checkout</a
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div
+				th:if="${products.isEmpty()}"
+				class="alert alert-warning"
+				role="alert"
+			>
+				Your cart is currently empty. Start adding some products!
+			</div>
 		</main>
 	</body>
 </html>

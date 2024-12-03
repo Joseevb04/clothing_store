@@ -89,4 +89,11 @@ public class CartServiceImpl implements CartService {
             return amount;
         }).orElseThrow(() -> new RuntimeException("Cart entry not found for the given user and product"));
     }
+
+    @Override
+    public double getUserCartTotal(int userId) {
+        return getCartsByUserId(userId).stream()
+                .mapToDouble(cart -> cart.getProduct().getPrice() * cart.getAmount())
+                .sum();
+    }
 }

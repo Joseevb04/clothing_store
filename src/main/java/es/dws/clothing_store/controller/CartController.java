@@ -1,5 +1,7 @@
 package es.dws.clothing_store.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,11 @@ public class CartController {
     @GetMapping
     public String showCart(final Model model) {
         return UserSessionUtils.getLoggedUser(session).map(u -> {
-            model.addAttribute("products", cartService.getCartsByUserId(u.getId()));
+            Map<String, Object> attributes = Map.of(
+                    "products", cartService.getCartsByUserId(u.getId()),
+                    "total", String.format("%.2f", cartService.getUserCartTotal(u.getId())));
+
+            model.addAllAttributes(attributes);
             return "cartView";
         }).orElse("redirect:/login");
     }
